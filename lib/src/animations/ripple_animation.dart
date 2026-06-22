@@ -16,7 +16,7 @@ class RippleAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = rippleColor ?? theme.colorScheme.primary.withOpacity(0.3);
+    final color = rippleColor ?? theme.colorScheme.primary.withValues(alpha: 0.3);
 
     return AnimatedBuilder(
       animation: controller,
@@ -54,7 +54,7 @@ class _RipplePainter extends CustomPainter {
     final maxRadius = size.width > size.height ? size.width : size.height;
 
     final paint = Paint()
-      ..color = color.withOpacity((1.0 - progress).clamp(0.0, 1.0))
+      ..color = color.withValues(alpha: (1.0 - progress).clamp(0.0, 1.0))
       ..style = PaintingStyle.fill;
 
     canvas.drawCircle(center, maxRadius * progress, paint);

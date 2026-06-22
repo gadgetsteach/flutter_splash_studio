@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui' show ImageFilter;
 import 'package:flutter/material.dart';
 import '../animations/animation_router.dart';
 import '../models/splash_animation.dart';
@@ -47,6 +48,24 @@ class SplashStudio extends StatefulWidget {
   /// Custom gradient background. Overrides [backgroundColor].
   final Gradient? backgroundGradient;
 
+  /// Amount of background blur for glassmorphism effect.
+  final double? blurAmount;
+
+  /// Set to true to enable glassmorphism styling on the background.
+  final bool enableGlassmorphism;
+
+  /// Custom shadows to apply to the logo/title container.
+  final List<BoxShadow>? containerShadows;
+
+  /// Border radius for the logo/title container.
+  final BorderRadiusGeometry? containerBorderRadius;
+
+  /// A custom loading indicator widget.
+  final Widget? loader;
+
+  /// Whether to show the [loader].
+  final bool showLoader;
+
   /// Optional bottom branding text (e.g., "Powered by Google").
   final String? bottomBranding;
 
@@ -67,6 +86,12 @@ class SplashStudio extends StatefulWidget {
     this.titleStyle,
     this.backgroundColor,
     this.backgroundGradient,
+    this.blurAmount,
+    this.enableGlassmorphism = false,
+    this.containerShadows,
+    this.containerBorderRadius,
+    this.loader,
+    this.showLoader = false,
     this.bottomBranding,
     this.bottomBrandingStyle,
   });
@@ -149,6 +174,49 @@ class _SplashStudioState extends State<SplashStudio> with SingleTickerProviderSt
       }
     }
 
+    Widget bodyContent = Center(
+      child: AnimationRouter(
+        animationType: resolvedAnimation,
+        controller: _controller,
+        curve: widget.curve,
+        child: resolvedLogoChild ?? Container(
+          decoration: BoxDecoration(
+            borderRadius: widget.containerBorderRadius,
+            boxShadow: widget.containerShadows,
+            color: widget.enableGlassmorphism ? Colors.white.withValues(alpha: 0.1) : null,
+          ),
+          padding: widget.enableGlassmorphism ? const EdgeInsets.all(32) : null,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (widget.logo != null)
+                Image(image: widget.logo!, width: 120, height: 120),
+              if (widget.title != null) ...[
+                const SizedBox(height: 24),
+                Text(
+                  widget.title!,
+                  style: widget.titleStyle ?? theme.textTheme.headlineMedium,
+                ),
+              ],
+              if (widget.showLoader) ...[
+                const SizedBox(height: 48),
+                widget.loader ?? const CircularProgressIndicator(),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+
+    // Apply Glassmorphism Background Blur if enabled
+    if (widget.enableGlassmorphism && widget.blurAmount != null) {
+      bodyContent = BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: widget.blurAmount!, sigmaY: widget.blurAmount!),
+        child: bodyContent,
+      );
+    }
+
     return Scaffold(
       backgroundColor: widget.backgroundGradient == null ? resolvedBgColor : null,
       body: Container(
@@ -156,27 +224,7 @@ class _SplashStudioState extends State<SplashStudio> with SingleTickerProviderSt
           color: widget.backgroundGradient == null ? resolvedBgColor : null,
           gradient: widget.backgroundGradient,
         ),
-        child: Center(
-          child: AnimationRouter(
-            animationType: resolvedAnimation,
-            controller: _controller,
-            curve: widget.curve,
-            child: resolvedLogoChild ?? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (widget.logo != null)
-                  Image(image: widget.logo!, width: 120, height: 120),
-                if (widget.title != null) ...[
-                  const SizedBox(height: 24),
-                  Text(
-                    widget.title!,
-                    style: widget.titleStyle ?? theme.textTheme.headlineMedium,
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ),
+        child: bodyContent,
       ),
     );
   }

@@ -82,6 +82,23 @@ Then run:
 dart run flutter_splash_studio:create
 ```
 
+### Preserving the Native Splash Screen
+
+Like `flutter_native_splash`, you can preserve the native splash screen until your app is fully ready. This ensures a seamless transition to your app.
+
+```dart
+import 'package:flutter_splash_studio/flutter_splash_studio.dart';
+
+void main() {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterSplashStudio.preserve(widgetsBinding: widgetsBinding);
+  runApp(const MyApp());
+}
+
+// Later, when your app is ready (e.g., after API calls):
+FlutterSplashStudio.remove();
+```
+
 ## Running the Live Visual Editor
 
 To try out all animations and templates, run the included example project:

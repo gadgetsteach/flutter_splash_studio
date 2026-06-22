@@ -1,12 +1,34 @@
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_splash_studio/flutter_splash_studio.dart';
 
 void main() {
-  test('adds one to input values', () {
-    final calculator = Calculator();
-    expect(calculator.addOne(2), 3);
-    expect(calculator.addOne(-7), -6);
-    expect(calculator.addOne(0), 1);
+  testWidgets('SplashStudio renders correctly with basic parameters', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: SplashStudio(
+          title: 'Test App',
+          animation: SplashAnimation.fade,
+          duration: Duration(seconds: 1),
+        ),
+      ),
+    );
+
+    // Verify the title is found
+    expect(find.text('Test App'), findsOneWidget);
+  });
+
+  testWidgets('SplashStudio renders Netflix template correctly', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: SplashStudio(
+          template: SplashTemplate.netflix,
+          duration: Duration(seconds: 1),
+        ),
+      ),
+    );
+
+    // Netflix template should render 'NETFLIX' text
+    expect(find.text('NETFLIX'), findsOneWidget);
   });
 }

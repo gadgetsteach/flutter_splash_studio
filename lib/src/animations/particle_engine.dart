@@ -53,7 +53,7 @@ class _ParticleEngineState extends State<ParticleEngine> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = widget.particleColor ?? theme.colorScheme.primary.withOpacity(0.4);
+    final color = widget.particleColor ?? theme.colorScheme.primary.withValues(alpha: 0.4);
 
     return Stack(
       children: [
