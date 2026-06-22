@@ -77,7 +77,6 @@ class SplashStudio extends StatefulWidget {
 
 class _SplashStudioState extends State<SplashStudio> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  bool _initialized = false;
 
   @override
   void initState() {
@@ -97,7 +96,6 @@ class _SplashStudioState extends State<SplashStudio> with SingleTickerProviderSt
 
     if (mounted) {
       setState(() {
-        _initialized = true;
       });
 
       if (widget.autoNavigate && widget.nextPage != null) {
