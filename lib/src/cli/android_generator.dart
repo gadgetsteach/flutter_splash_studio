@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-
 class AndroidGenerator {
   static Future<void> generate(Map<String, dynamic> config) async {
     final String color = config['color'] ?? '#FFFFFF';
@@ -39,9 +37,8 @@ class AndroidGenerator {
         <bitmap android:gravity="center" android:src="@drawable/splash" />
     </item>''';
       } else {
-        if (kDebugMode) {
-          print('⚠️ Warning: Image file not found at $imagePath');
-        }
+        // ignore: avoid_print
+        print('⚠️ Warning: Image file not found at $imagePath');
       }
     }
 

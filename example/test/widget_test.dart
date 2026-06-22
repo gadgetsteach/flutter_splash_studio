@@ -9,14 +9,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:example/main.dart';
 
 void main() {
-  testWidgets('DemoApp visual editor smoke test', (WidgetTester tester) async {
+  testWidgets('CompleteExampleApp smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const DemoApp());
+    await tester.pumpWidget(const CompleteExampleApp());
 
-    // Verify that the title of the visual editor is rendered
-    expect(find.text('Splash Studio Editor'), findsOneWidget);
-    
-    // Verify the preview button exists
-    expect(find.text('Preview Splash Screen'), findsOneWidget);
+    // Verify that the title of the SplashStudio is rendered
+    expect(find.text('My Production App'), findsOneWidget);
   });
 }
