@@ -139,7 +139,7 @@ class _VisualEditorPageState extends State<VisualEditorPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Splash Studio Editor'),
-        backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
       ),
       body: Row(
         children: [
@@ -202,7 +202,7 @@ class _VisualEditorPageState extends State<VisualEditorPage> {
           Expanded(
             flex: 2,
             child: Container(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
