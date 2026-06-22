@@ -1,5 +1,8 @@
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+library flutter_splash_studio;
+
+// Export Core Models
+export 'src/models/splash_animation.dart';
+export 'src/models/splash_template.dart';
+
+// Export Core Widget
+export 'src/widgets/splash_studio.dart';
